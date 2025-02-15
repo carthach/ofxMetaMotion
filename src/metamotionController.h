@@ -71,6 +71,7 @@ public:
     float outputMag[3];
     float outputGyro[3];
     
+    
     // ble
     bleInterface bleInterface;
     int metaMotionDeviceIndex = -1;

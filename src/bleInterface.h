@@ -5,7 +5,7 @@
 #include <csignal>
 #include <thread>
 
-#define SCAN_TIMEOUT_MS 5000
+#define SCAN_TIMEOUT_MS 10000
 
 #define NORDIC_UART_SERVICE_UUID "6e400001-b5a3-f393-e0a9-e50e24dcca9e"
 #define NORDIC_UART_CHAR_RX      "6e400002-b5a3-f393-e0a9-e50e24dcca9e"

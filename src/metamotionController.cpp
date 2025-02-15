@@ -151,9 +151,9 @@ void metamotionController::configure_sensor_fusion(MblMwMetaWearBoard* board) {
     // set fusion mode to ndof (n degress of freedom)
     mbl_mw_sensor_fusion_set_mode(board, MBL_MW_SENSOR_FUSION_MODE_NDOF);
     // set acceleration range to +/-16G, note accelerometer is configured here
-    mbl_mw_sensor_fusion_set_acc_range(board, MBL_MW_SENSOR_FUSION_ACC_RANGE_16G);
+    mbl_mw_sensor_fusion_set_acc_range(board, MBL_MW_SENSOR_FUSION_ACC_RANGE_4G);
     // set gyro range to 2000 DPS
-    mbl_mw_sensor_fusion_set_gyro_range(board, MBL_MW_SENSOR_FUSION_GYRO_RANGE_2000DPS);
+    mbl_mw_sensor_fusion_set_gyro_range(board, MBL_MW_SENSOR_FUSION_GYRO_RANGE_2000DPS);    
     // write changes to the board
     mbl_mw_sensor_fusion_write_config(board);
     
