@@ -238,8 +238,43 @@ void metamotionController::enable_fusion_sampling(MblMwMetaWearBoard* board) {
         //printf("(%.3f, %.3f, %.3f)\n", euler->yaw, euler->pitch, euler->roll);
     });
     
+    auto acceleration_signal = mbl_mw_sensor_fusion_get_data_signal(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_ACC);
+    mbl_mw_datasignal_subscribe(acceleration_signal, this, [](void* context, const MblMwData* data) -> void {
+        auto *wrapper = static_cast<metamotionController *>(context);
+        
+        auto acceleration = (MblMwCorrectedCartesianFloat*) data->value;
+        wrapper->outputAcceleration[0] = acceleration->x;
+        wrapper->outputAcceleration[1] = acceleration->y;
+        wrapper->outputAcceleration[2] = acceleration->z;
+    });
+    
+    auto gyro_signal = mbl_mw_sensor_fusion_get_data_signal(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_GYRO);
+    mbl_mw_datasignal_subscribe(gyro_signal, this, [](void* context, const MblMwData* data) -> void {
+        auto *wrapper = static_cast<metamotionController *>(context);
+        
+        auto gyro = (MblMwCorrectedCartesianFloat*) data->value;
+        wrapper->outputGyro[0] = gyro->x;
+        wrapper->outputGyro[1] = gyro->y;
+        wrapper->outputGyro[2] = gyro->z;
+    });
+    
+    auto mag_signal = mbl_mw_sensor_fusion_get_data_signal(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_MAG);
+    mbl_mw_datasignal_subscribe(mag_signal, this, [](void* context, const MblMwData* data) -> void {
+        auto *wrapper = static_cast<metamotionController *>(context);
+        
+        auto mag = (MblMwCorrectedCartesianFloat*) data->value;
+        wrapper->outputMag[0] = mag->x;
+        wrapper->outputMag[1] = mag->y;
+        wrapper->outputMag[2] = mag->z;
+    });
+    
     // Start
+    
     mbl_mw_sensor_fusion_enable_data(board, MBL_MW_SENSOR_FUSION_DATA_EULER_ANGLE);
+    mbl_mw_sensor_fusion_enable_data(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_ACC);
+    mbl_mw_sensor_fusion_enable_data(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_GYRO);
+    mbl_mw_sensor_fusion_enable_data(board, MBL_MW_SENSOR_FUSION_DATA_CORRECTED_MAG);
+    
     mbl_mw_sensor_fusion_start(board);
     enable_led(board);
 }

@@ -67,6 +67,10 @@ public:
     int battery_level;
     const char* module_name;
     
+    float outputAcceleration[3];
+    float outputMag[3];
+    float outputGyro[3];
+    
     // ble
     bleInterface bleInterface;
     int metaMotionDeviceIndex = -1;
